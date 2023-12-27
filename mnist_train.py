@@ -1,3 +1,4 @@
+import argparse
 import tensorflow as tf
 from tensorflow.keras.datasets import mnist
 from tensorflow.keras.models import Sequential
@@ -6,26 +7,27 @@ from tensorflow.keras.callbacks import Callback
 import neptune
 import numpy as np
 
+# Parse the following arguments from the terminal:
+# --num-epochs      The number of epochs, default is 10
+# --learning_rate   The learning rate, default 0.001
+# --run_name        The name of the run
+parser = argparse.ArgumentParser(description='Train a CNN model on MNIST dataset')
+parser.add_argument('--num_epochs', type=int, default=10, help='Number of training epochs')
+parser.add_argument('--learning_rate', type=float, default=0.001, help='Learning rate for optimizer')
+parser.add_argument('--run_name', type=str, default='my_first_experiment', help='Name of the experiment run')
+args = parser.parse_args()
+
 # Set TensorFlow to run on CPU
 tf.config.set_visible_devices([], 'GPU')
 
 # Name of the experiment
-run_name = "my first experiment"
+run_name = args.run_name
 
 run = neptune.init_run(
     project="emma.saroyan/Mnist",
     api_token="eyJhcGlfYWRkcmVzcyI6Imh0dHBzOi8vYXBwLm5lcHR1bmUuYWkiLCJhcGlfdXJsIjoiaHR0cHM6Ly9hcHAubmVwdHVuZS5haSIsImFwaV9rZXkiOiIzODFkZTZkMi05M2FiLTQ2YzctYjQxOS1iMTIyNmFmNzNhNDQifQ==",
     name=run_name
 )  # your credential
-
-# Model Parameters
-num_epochs = 10
-optimizer = 'adam'
-
-run['parameters'] = {
-    "num_epochs": num_epochs,
-    "optimizer": optimizer
-}
 
 class TrainingCallback(Callback):
     def on_epoch_end(self, epoch, logs=None):
@@ -87,6 +89,19 @@ model = Sequential([
     Dropout(0.5),
     Dense(10, activation='softmax')
 ])
+
+# Configure the learning rate
+learning_rate = args.learning_rate
+# Configure the optimizer
+optimizer = tf.keras.optimizers.Adam(learning_rate=learning_rate)
+
+# Model Parameters
+num_epochs = args.num_epochs
+run['parameters'] = {
+    "num_epochs": num_epochs,
+    "optimizer": optimizer.name,
+    "learning_rate": learning_rate
+}
 
 model.compile(optimizer=optimizer, loss='categorical_crossentropy', metrics=['accuracy'])
 

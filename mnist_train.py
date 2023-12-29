@@ -24,7 +24,7 @@ tf.config.set_visible_devices([], 'GPU')
 run_name = args.run_name
 
 run = neptune.init_run(
-    project="emma.saroyan/Mnist",
+    project="emma.saroyan/MnistCV",
     api_token="eyJhcGlfYWRkcmVzcyI6Imh0dHBzOi8vYXBwLm5lcHR1bmUuYWkiLCJhcGlfdXJsIjoiaHR0cHM6Ly9hcHAubmVwdHVuZS5haSIsImFwaV9rZXkiOiIzODFkZTZkMi05M2FiLTQ2YzctYjQxOS1iMTIyNmFmNzNhNDQifQ==",
     name=run_name
 )  # your credential

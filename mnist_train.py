@@ -46,31 +46,31 @@ class TrainingCallback(Callback):
 total_images = x_train.shape[0] + x_val.shape[0]
 print(f"Total number of images in the dataset: {total_images}")
 print(f"Number of training images: {x_train.shape[0]}")
-print(f"Number of testing images: {x_val.shape[0]}")
+print(f"Number of validation images: {x_val.shape[0]}")
 print(f"Training set percentage: {100 * x_train.shape[0] / total_images:.2f}%")
-print(f"Testing set percentage: {100 * x_val.shape[0] / total_images:.2f}%")
+print(f"Validation set percentage: {100 * x_val.shape[0] / total_images:.2f}%")
 
 # Class distribution
 unique, counts = np.unique(y_train, return_counts=True)
 train_class_distribution = dict(zip(unique, counts))
 unique, counts = np.unique(y_val, return_counts=True)
-test_class_distribution = dict(zip(unique, counts))
+val_class_distribution = dict(zip(unique, counts))
 
 print("Training set class distribution and percentages:")
 for k, v in train_class_distribution.items():
     print(f"Class {k}: {v} images, {100 * v / x_train.shape[0]:.2f}%")
 
-print("Testing set class distribution and percentages:")
-for k, v in test_class_distribution.items():
+print("Validation set class distribution and percentages:")
+for k, v in val_class_distribution.items():
     print(f"Class {k}: {v} images, {100 * v / x_val.shape[0]:.2f}%")
 
 # Metadata about the dataset
 run['dataset'] = {
     "total_images": total_images,
     "total_train": x_train.shape[0],
-    "total_test": x_val.shape[0],
+    "total_val": x_val.shape[0],
     "train_percentage": 100 * x_train.shape[0] / total_images,
-    "test_percentage": 100 * x_val.shape[0] / total_images
+    "val_percentage": 100 * x_val.shape[0] / total_images
 }
 
 x_train, x_val = x_train / 255.0, x_val / 255.0

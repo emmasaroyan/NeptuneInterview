@@ -74,7 +74,7 @@ for k, v in val_class_distribution.items():
     print(f"Class {k}: {v} images, {100 * v / x_val.shape[0]:.2f}%")
 
 
-
+#Preparing the training and the validation datasets
 x_train, x_val = x_train / 255.0, x_val / 255.0
 x_train = x_train.reshape(-1, 28, 28, 1)
 x_val = x_val.reshape(-1, 28, 28, 1)
@@ -105,6 +105,7 @@ run['parameters'] = {
     "learning_rate": learning_rate
 }
 
+#Setting up the parameters
 model.compile(optimizer=optimizer, loss='categorical_crossentropy', metrics=['accuracy'])
 
 # Train model

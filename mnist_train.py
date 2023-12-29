@@ -56,14 +56,6 @@ train_class_distribution = dict(zip(unique, counts))
 unique, counts = np.unique(y_val, return_counts=True)
 val_class_distribution = dict(zip(unique, counts))
 
-print("Training set class distribution and percentages:")
-for k, v in train_class_distribution.items():
-    print(f"Class {k}: {v} images, {100 * v / x_train.shape[0]:.2f}%")
-
-print("Validation set class distribution and percentages:")
-for k, v in val_class_distribution.items():
-    print(f"Class {k}: {v} images, {100 * v / x_val.shape[0]:.2f}%")
-
 # Metadata about the dataset
 run['dataset'] = {
     "total_images": total_images,
@@ -72,6 +64,16 @@ run['dataset'] = {
     "train_percentage": 100 * x_train.shape[0] / total_images,
     "val_percentage": 100 * x_val.shape[0] / total_images
 }
+
+print("Training set class distribution and percentages:")
+for k, v in train_class_distribution.items():
+    print(f"Class {k}: {v} images, {100 * v / x_train.shape[0]:.2f}%")
+
+print("Validation set class distribution and percentages:")
+for k, v in val_class_distribution.items():
+    print(f"Class {k}: {v} images, {100 * v / x_val.shape[0]:.2f}%")
+
+
 
 x_train, x_val = x_train / 255.0, x_val / 255.0
 x_train = x_train.reshape(-1, 28, 28, 1)

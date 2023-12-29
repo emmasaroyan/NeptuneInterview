@@ -62,17 +62,18 @@ run['dataset'] = {
     "total_train": x_train.shape[0],
     "total_val": x_val.shape[0],
     "train_percentage": 100 * x_train.shape[0] / total_images,
-    "val_percentage": 100 * x_val.shape[0] / total_images
+    "val_percentage": 100 * x_val.shape[0] / total_images,
 }
 
 print("Training set class distribution and percentages:")
 for k, v in train_class_distribution.items():
+    run[f"dataset/class_dist_train/{k}"] = v;
     print(f"Class {k}: {v} images, {100 * v / x_train.shape[0]:.2f}%")
 
 print("Validation set class distribution and percentages:")
 for k, v in val_class_distribution.items():
+    run[f"dataset/class_dist_val/{k}"] = v;
     print(f"Class {k}: {v} images, {100 * v / x_val.shape[0]:.2f}%")
-
 
 #Preparing the training and the validation datasets
 x_train, x_val = x_train / 255.0, x_val / 255.0

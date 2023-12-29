@@ -1,5 +1,14 @@
 # CV Use Case for Neptune
 
+## Installation 
+
+Install the following packages: 
+```
+pip install tensorflow neptune numpy 
+```
+
+## How to run 
+
 Run the script mnist_train.py to train the model and upload the results to Neptune:
 
 ```sh
